@@ -1,0 +1,67 @@
+/* CampusPage.css */
+
+/* Basic container styles */
+.campus-page {
+  font-family: Arial, sans-serif;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #000; /* Black background for the entire page */
+  color: white; /* White text */
+  /* Ensure it takes full height */
+}
+
+/* Heading styles */
+.heading {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 30px;
+}
+
+/* Container for the outlet cards */
+.outlets-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px; /* Increased gap between cards */
+  margin-bottom: 40px;
+}
+
+/* Each outlet card */
+.outlet-card {
+  display: flex;
+  flex-direction: column; /* Stack logo and name vertically */
+  align-items: center;
+  justify-content: center;
+  background-color: #000; /* Black background for cards */
+  color: white;
+  padding: 20px; /* Increased padding */
+  border-radius: 10px;
+  width: 250px; /* Increased card width */
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Center-align text */
+}
+
+/* Hover effect for outlet card */
+.outlet-card:hover {
+  background-color: #333; /* Darker blackish color */
+  transform: scale(1.05);
+}
+
+/* Style for the outlet logo */
+.outlet-logo {
+  width: 100px; /* Increased logo width */
+  height: 100px; /* Increased logo height */
+  object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 15px; /* Increased space between logo and restaurant name */
+}
+
+/* Style for the restaurant name */
+.outlet-name {
+  font-size: 1.5em; /* Increased font size */
+  font-weight: bold;
+  text-transform: capitalize;
+  color: white;
+}

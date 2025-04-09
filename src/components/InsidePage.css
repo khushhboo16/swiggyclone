@@ -1,0 +1,64 @@
+/* CampusPage.css */
+
+/* Basic container styles */
+.campus-page {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+
+/* Heading styles */
+.heading {
+  text-align: center;
+  font-size: 2em;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+/* Container for the outlet cards */
+.outlets-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Each outlet card */
+.outlet-card {
+  display: flex;
+  flex-direction: column; /* Stack logo and name vertically */
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+  width: 200px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Center-align text */
+}
+
+/* Hover effect for outlet card */
+.outlet-card:hover {
+  background-color: #333;
+  transform: scale(1.05);
+}
+
+/* Style for the outlet logo */
+.outlet-logo {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 10px; /* Space between logo and restaurant name */
+}
+
+/* Style for the restaurant name */
+.outlet-name {
+  font-size: 1.2em;
+  font-weight: bold;
+  text-transform: capitalize;
+  color: white;
+}
