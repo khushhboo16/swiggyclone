@@ -1,5 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import { CartProvider } from "./context/CartContext";
 import HeaderYes from "./components/HeaderYes";
 import HeroSection from "./components/HeroSection";
 import Footer from "./components/Footer";
@@ -14,38 +16,62 @@ import NBC from "./restaurants/NBC";
 import HK from "./restaurants/HK";
 import PartnerRestaurants from "./components/PartnerRestaurants";
 import IntroSection from "./components/IntroSection";
+import Order from './components/Order';
+import Login from './components/Login';
+import Register from './components/Register';
+import PaymentSelection from './components/PaymentSelection';
+import OrderSuccess from './components/OrderSuccess';
+
 
 function App() {
   return (
-    <Router>
-      <HeaderYes /> {/* Header on all pages */}
+    <AuthProvider>
+      <CartProvider>
+        <Router>
+          <div className="flex flex-col min-h-screen">
+            <HeaderYes />
 
-      <Routes>
-        {/* Home page route */}
-        <Route path="/" element={
-          <>
-            <HeroSection />
-            <IntroSection />
-            <PartnerRestaurants />
-          </>
-        } />
+            <main className="flex-grow">
+              <Routes>
+                {/* Public Routes */}
+                <Route path="/" element={
+                  <>
+                    <HeroSection />
+                    <IntroSection />
+                    <PartnerRestaurants />
+                  </>
+                } />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/hostel" element={<InsidePage />} />
+                <Route path="/campus" element={<CampusPage />} />
+                <Route path="/outside-hostel" element={<OutsideCampus />} />
 
-        {/* Other pages */}
-        <Route path="/hostel" element={<InsidePage />} />
-        <Route path="/campus" element={<CampusPage />} />
-        <Route path="/outside-hostel" element={<OutsideCampus />} />
+                {/* Restaurant pages */}
+                <Route path="/restaurant/pizza-bakers" element={<PizzaBakers />} />
+                <Route path="/restaurant/chatkara" element={<Chatkara />} />
+                <Route path="/restaurant/burger-farm" element={<BurgerFarm />} />
+                <Route path="/restaurant/italian-oven" element={<ItalianOven />} />
+                <Route path="/restaurant/nbc" element={<NBC />} />
+                <Route path="/restaurant/hk" element={<HK />} />
 
-        {/* Restaurant pages */}
-        <Route path="/restaurant/pizza-bakers" element={<PizzaBakers />} />
-        <Route path="/restaurant/chatkara" element={<Chatkara />} />
-        <Route path="/restaurant/burger-farm" element={<BurgerFarm />} />
-        <Route path="/restaurant/italian-oven" element={<ItalianOven />} />
-        <Route path="/restaurant/nbc" element={<NBC />} />
-        <Route path="/restaurant/hk" element={<HK />} />
-      </Routes>
+                <Route path="/orders" element={
+                    <Order />
+                } />
+                <Route path="/payment" element={
+                    <PaymentSelection />
+                } />
+                <Route path="/order-success" element={
+                    <OrderSuccess />
+                } />
+              </Routes>
+            </main>
 
-      <Footer /> {/* Footer on all pages */}
-    </Router>
+            <Footer />
+          </div>
+        </Router>
+      </CartProvider>
+    </AuthProvider>
   );
 }
 

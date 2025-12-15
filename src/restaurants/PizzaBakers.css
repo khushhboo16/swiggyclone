@@ -3,17 +3,21 @@
   background-color: #000; /* Black background */
   color: #fff; /* White text */
   padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
 }
 
 .header {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .restaurant-logo {
-  width: 150px;
-  height: auto;
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
   margin-right: 20px;
 }
 
@@ -24,21 +28,26 @@ h1 {
 }
 
 h2 {
-  font-size: 2em;
-  margin-top: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
 }
 
 .menu {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .menu-item {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 15px;
-  margin: 10px 0;
-  background-color: #333; /* Dark background for each menu item */
-  border-radius: 5px;
+  border-bottom: 1px solid #eee;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
 }
 
 .menu-item-info {
@@ -46,17 +55,27 @@ h2 {
   flex-direction: column;
 }
 
+.menu-item-info h3 {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.menu-item-info p {
+  color: #666;
+}
+
 .add-to-cart-button {
-  background-color: #ff6600; /* Orange button */
+  background-color: #ff6b00;
   color: white;
-  padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  padding: 8px 16px;
+  border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 .add-to-cart-button:hover {
-  background-color: #e65c00;
+  background-color: #ff8533;
 }
 
 .cart {
@@ -85,11 +104,97 @@ h2 {
   background-color: #c82333;
 }
 
-h3 {
-  font-size: 1.8em;
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-p {
-  font-size: 1.2em;
-  font-weight: bold;
+.quantity-controls button {
+  background-color: #ff6b00;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantity-controls button:hover {
+  background-color: #ff8533;
+}
+
+.quantity-controls span {
+  font-size: 16px;
+  font-weight: 500;
+  min-width: 24px;
+  text-align: center;
+}
+
+/* Confirmation Modal */
+.confirmation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.confirmation-content {
+  background-color: white;
+  padding: 24px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+}
+
+.confirmation-content p {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.confirmation-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.confirmation-buttons button {
+  padding: 8px 24px;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-no {
+  background-color: #e5e5e5;
+  color: #333;
+  border: none;
+}
+
+.btn-no:hover {
+  background-color: #d5d5d5;
+}
+
+.btn-yes {
+  background-color: #ff6b00;
+  color: white;
+  border: none;
+}
+
+.btn-yes:hover {
+  background-color: #ff8533;
 }

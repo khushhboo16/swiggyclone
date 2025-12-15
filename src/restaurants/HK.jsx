@@ -1,109 +1,109 @@
 import React, { useState } from "react";
-import "./PizzaBakers.css"; // Ensure CSS is linked properly
+import { useCart } from "../context/CartContext";
+import { Link } from "react-router-dom";
+import "../restaurants/PizzaBakers.css";
+
+// Restaurant info
+const RESTAURANT_INFO = {
+  id: "hk",
+  name: "HK",
+  description: "Authentic Indian cuisine"
+};
 
 const menuItems = [
-  { name: "Dal Tadka", price: 240 },
-  { name: "Malai Kofta (White Gravy)", price: 260 },
-  { name: "Jeera Aloo", price: 200 },
-  { name: "Methi Matar Malai", price: 250 },
-  { name: "Palak Paneer", price: 300 },
-  { name: "Corn Palak", price: 280 },
-  { name: "Shahi Paneer (White Gravy)", price: 310 },
-  { name: "Channa Masala", price: 270 },
-  { name: "Paneer Butter Masala", price: 300 },
-  { name: "Sev Tamtar", price: 220 },
-  { name: "Mix Vegetable", price: 270 },
-];
-
-const accompaniments = [
-  { name: "Onion Salad", price: 50 },
-  { name: "Extra White Butter", price: 40 },
-  { name: "Green Salad (Seasonal)", price: 70 },
-  { name: "Half Curd", price: 60 },
-  { name: "Full Curd", price: 100 },
-  { name: "Roasted Papad", price: 25 },
-  { name: "Boondi Raita/Veg. Raita", price: 140 },
-  { name: "Masala Papad", price: 50 },
-  { name: "Pineapple Raita", price: 170 },
+  { id: "hk1", name: "Dal Tadka", price: 199 },
+  { id: "hk2", name: "Veg Manchurian", price: 179 },
+  { id: "hk3", name: "Paneer Butter Masala", price: 229 },
+  { id: "hk4", name: "Masala Dosa", price: 149 },
+  { id: "hk5", name: "Fried Rice", price: 189 },
+  { id: "hk6", name: "Chilli Paneer", price: 249 },
+  { id: "hk7", name: "Combo Meal", price: 399 }
 ];
 
 const HK = () => {
-  const [cart, setCart] = useState([]);
-  const [total, setTotal] = useState(0);
+  const { cart, addToCart, updateQuantity, cartTotal, currentRestaurant, clearCart } = useCart();
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [itemToAdd, setItemToAdd] = useState(null);
 
-  const addToCart = (item) => {
-    setCart((prevCart) => {
-      const updatedCart = [...prevCart, item];
-      updateTotal(updatedCart);
-      return updatedCart;
-    });
+  const getItemQuantity = (itemId) => {
+    const item = cart.find(cartItem => cartItem.id === itemId);
+    return item ? item.quantity : 0;
   };
 
-  const updateTotal = (updatedCart) => {
-    const totalPrice = updatedCart.reduce((acc, item) => acc + item.price, 0);
-    setTotal(totalPrice);
+  const handleAddToCart = (item) => {
+    const added = addToCart(item, RESTAURANT_INFO);
+    if (!added) {
+      setItemToAdd(item);
+      setShowConfirmation(true);
+    }
   };
 
-  const removeFromCart = (itemToRemove) => {
-    setCart((prevCart) => {
-      const updatedCart = prevCart.filter((item) => item.name !== itemToRemove.name);
-      updateTotal(updatedCart);
-      return updatedCart;
-    });
+  const handleConfirmation = (confirmed) => {
+    if (confirmed && itemToAdd) {
+      clearCart();
+      addToCart(itemToAdd, RESTAURANT_INFO);
+    }
+    setShowConfirmation(false);
+    setItemToAdd(null);
   };
 
   return (
     <div className="restaurant-page">
+      {showConfirmation && (
+        <div className="confirmation-modal">
+          <div className="confirmation-content">
+            <p>Your cart contains dishes from {currentRestaurant.name}. Do you want to discard the selection and add dishes from {RESTAURANT_INFO.name}?</p>
+            <div className="confirmation-buttons">
+              <button onClick={() => handleConfirmation(false)} className="btn-no">No</button>
+              <button onClick={() => handleConfirmation(true)} className="btn-yes">Yes</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="header">
-        <img src="/images/hk.png" alt="Highway King" className="restaurant-logo" />
+        <img src="/images/hk.png" alt="HK" className="restaurant-logo" />
         <div>
-          <h1>Highway King</h1>
-          <p>Authentic Indian flavors served fresh.</p>
+          <h1>{RESTAURANT_INFO.name}</h1>
+          <p>{RESTAURANT_INFO.description}</p>
         </div>
       </div>
 
       <div className="menu">
-        <h2>Main Dishes</h2>
-        {menuItems.map((item, index) => (
-          <div key={index} className="menu-item">
+        <h2>Menu</h2>
+        {menuItems.map((item) => (
+          <div key={item.id} className="menu-item">
             <div className="menu-item-info">
               <h3>{item.name}</h3>
               <p>₹{item.price}</p>
             </div>
-            <button className="add-to-cart-button" onClick={() => addToCart(item)}>
-              Add to Cart
-            </button>
+            {getItemQuantity(item.id) === 0 ? (
+              <button className="add-to-cart-button" onClick={() => handleAddToCart(item)}>
+                Add to Cart
+              </button>
+            ) : (
+              <div className="quantity-controls">
+                <button onClick={() => updateQuantity(item.id, getItemQuantity(item.id) - 1)}>-</button>
+                <span>{getItemQuantity(item.id)}</span>
+                <button onClick={() => updateQuantity(item.id, getItemQuantity(item.id) + 1)}>+</button>
+              </div>
+            )}
           </div>
         ))}
       </div>
 
-      <div className="menu">
-        <h2>Accompaniments</h2>
-        {accompaniments.map((item, index) => (
-          <div key={index} className="menu-item">
-            <div className="menu-item-info">
-              <h3>{item.name}</h3>
-              <p>₹{item.price}</p>
-            </div>
-            <button className="add-to-cart-button" onClick={() => addToCart(item)}>
-              Add to Cart
-            </button>
-          </div>
-        ))}
-      </div>
-
-      <div className="cart">
-        <h3>Cart</h3>
-        <ul>
-          {cart.map((item, index) => (
-            <li key={index} className="cart-item">
-              {item.name} - ₹{item.price}
-              <button className="remove-button" onClick={() => removeFromCart(item)}>Remove</button>
-            </li>
-          ))}
-        </ul>
-        <p><strong>Total: ₹{total}</strong></p>
-      </div>
+      {/* Floating Cart Button */}
+      {cart.length > 0 && (
+        <Link 
+          to="/orders" 
+          className="fixed bottom-6 right-6 bg-orange-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-orange-600 transition-colors flex items-center gap-2"
+        >
+          <span>View Cart</span>
+          <span className="bg-white text-orange-500 px-2 py-1 rounded-full text-sm">
+            ₹{cartTotal}
+          </span>
+        </Link>
+      )}
     </div>
   );
 };

@@ -1,7 +1,17 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './PartnerRestaurants.css';
 
 const PartnerRestaurants = () => {
+  const restaurants = [
+    { name: 'Chatkara', image: '/images/chatkara.png', link: '/restaurant/chatkara' },
+    { name: 'Devine', image: '/images/devine.png', link: '/restaurant/devine' },
+    { name: 'NBC', image: '/images/nbc.png', link: '/restaurant/nbc' },
+    { name: 'Highway King', image: '/images/hk.png', link: '/restaurant/hk' },
+    { name: 'Nescafe', image: '/images/nescafe.png', link: '/restaurant/nescafe' },
+    { name: 'Tea Post', image: '/images/teapost.png', link: '/restaurant/tea-post' }
+  ];
+
   return (
     <section className="bg-black text-white py-12">
       <div className="container mx-auto text-center">
@@ -14,12 +24,19 @@ const PartnerRestaurants = () => {
 
         {/* Grid for Images */}
         <div className="grid grid-cols-3 gap-6">
-          <img src="/images/chatkara.png" alt="Restaurant 1" className="restaurant-image" />
-          <img src="/images/devine.png" alt="Restaurant 2" className="restaurant-image" />
-          <img src="/images/nbc.png" alt="Restaurant 3" className="restaurant-image" />
-          <img src="/images/hk.png" alt="Restaurant 4" className="restaurant-image" />
-          <img src="/images/nescafe.png" alt="Restaurant 5" className="restaurant-image" />
-          <img src="/images/teapost.png" alt="Restaurant 6" className="restaurant-image" />
+          {restaurants.map((restaurant, index) => (
+            <Link 
+              key={index} 
+              to={restaurant.link}
+              className="restaurant-link"
+            >
+              <img 
+                src={restaurant.image} 
+                alt={restaurant.name} 
+                className="restaurant-image hover:scale-105 transition-transform duration-300" 
+              />
+            </Link>
+          ))}
         </div>
       </div>
     </section>
